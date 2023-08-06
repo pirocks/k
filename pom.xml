@@ -18,6 +18,7 @@
     <module>haskell-backend</module>
     <module>llvm-backend</module>
     <module>llvm-backend/src/main/native/llvm-backend/matching</module>
+    <module>JSONDumper</module>
   </modules>
 
   <scm>
