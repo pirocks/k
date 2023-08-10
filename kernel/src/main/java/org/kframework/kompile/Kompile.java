@@ -134,7 +134,7 @@ public class Kompile {
         }
         if (kompileOptions.experimental.parseOnly) {
             System.exit(0);
-            return null
+            return null;
         } else {
             Definition kompiledDefinition = pipeline.apply(parsedDef);
 
