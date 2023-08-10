@@ -111,6 +111,7 @@ public class Kompile {
      * @return
      */
     public CompiledDefinition run(File definitionFile, String mainModuleName, String mainProgramsModuleName, Function<Definition, Definition> pipeline, Set<String> excludedModuleTags) {
+
         if (kompileOptions.profileRules) {
             for (File f : files.resolveKompiled(".").listFiles()) {
                 if (f.getName().matches("timing[0-9]+\\.log")) {
@@ -131,23 +132,27 @@ public class Kompile {
                 throw KEMException.criticalError("Unsupported encoding `UTF-8` when saving JSON definition.");
             }
         }
+        if (kompileOptions.experimental.parseOnly) {
+            System.exit(0);
+            return null
+        } else {
+            Definition kompiledDefinition = pipeline.apply(parsedDef);
 
-        Definition kompiledDefinition = pipeline.apply(parsedDef);
+            files.saveToKompiled("compiled.txt", kompiledDefinition.toString());
+            sw.printIntermediate("Apply compile pipeline");
 
-        files.saveToKompiled("compiled.txt", kompiledDefinition.toString());
-        sw.printIntermediate("Apply compile pipeline");
-
-        if (kompileOptions.experimental.emitJson) {
-            try {
-                files.saveToKompiled("compiled.json", new String(ToJson.apply(kompiledDefinition), "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                throw KEMException.criticalError("Unsupported encoding `UTF-8` when saving JSON definition.");
+            if (kompileOptions.experimental.emitJson) {
+                try {
+                    files.saveToKompiled("compiled.json", new String(ToJson.apply(kompiledDefinition), "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    throw KEMException.criticalError("Unsupported encoding `UTF-8` when saving JSON definition.");
+                }
             }
+
+            ConfigurationInfoFromModule configInfo = new ConfigurationInfoFromModule(kompiledDefinition.mainModule());
+
+            return new CompiledDefinition(kompileOptions, parsedDef, kompiledDefinition, files, kem, configInfo.getDefaultCell(configInfo.getRootCell()).klabel());
         }
-
-        ConfigurationInfoFromModule configInfo = new ConfigurationInfoFromModule(kompiledDefinition.mainModule());
-
-        return new CompiledDefinition(kompileOptions, parsedDef, kompiledDefinition, files, kem, configInfo.getDefaultCell(configInfo.getRootCell()).klabel());
     }
 
     public Definition parseDefinition(File definitionFile, String mainModuleName, String mainProgramsModule, Set<String> excludedModuleTags) {
