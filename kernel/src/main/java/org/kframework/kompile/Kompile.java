@@ -123,11 +123,11 @@ public class Kompile {
         sw.printIntermediate("Parse definition [" + definitionParsing.parsedBubbles.get() + "/" + (definitionParsing.parsedBubbles.get() + definitionParsing.cachedBubbles.get()) + " rules]");
 
         files.saveToKompiled("parsed.txt", parsedDef.toString());
-        checkDefinition(parsedDef, excludedModuleTags);
 
         if (kompileOptions.experimental.emitJson) {
             try {
                 files.saveToKompiled("parsed.json",   new String(ToJson.apply(parsedDef),          "UTF-8"));
+
             } catch (UnsupportedEncodingException e) {
                 throw KEMException.criticalError("Unsupported encoding `UTF-8` when saving JSON definition.");
             }
@@ -136,6 +136,7 @@ public class Kompile {
             System.exit(0);
             return null;
         } else {
+            checkDefinition(parsedDef, excludedModuleTags);
             Definition kompiledDefinition = pipeline.apply(parsedDef);
 
             files.saveToKompiled("compiled.txt", kompiledDefinition.toString());
