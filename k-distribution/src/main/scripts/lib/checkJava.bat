@@ -17,7 +17,7 @@ if %INCOMPLETE% == 1 (
   ) else (
     set ARCH=32
   )
-  set K_OPTS=-Xms64m -XX:-UseGCOverheadLimit -Xmx48G -Xss32m %TIERED% %K_OPTS%
+  set K_OPTS=-Xms64m -XX:-UseGCOverheadLimit -Xmx56G -Xss32m %TIERED% %K_OPTS%
   set INCOMPLETE=2
 )
 if %INCOMPLETE%==2 (
