@@ -40,7 +40,7 @@ else
     if [ $ARCH -eq 64 ]; then
       TIERED=-XX:+TieredCompilation
     fi
-    export K_OPTS="-Xms64m -Xmx128G -XX:-UseGCOverheadLimit -Xss32m $TIERED $K_OPTS"
+    export K_OPTS="-Xms64m -Xmx32G -XX:-UseGCOverheadLimit -Xss32m $TIERED $K_OPTS"
     JAVA="java -Dfile.encoding=UTF-8 -Djava.awt.headless=true $K_OPTS -ea -cp \"$(dirname "$BASH_SOURCE")/java/*\""
   fi
 fi

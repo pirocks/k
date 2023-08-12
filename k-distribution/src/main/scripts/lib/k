@@ -4,5 +4,5 @@ if [[ `uname` == *MINGW* || `uname` == *MSYS* || `uname` == *CYGWIN* ]]; then
 else
   source "$(dirname "$0")/setenv"
   ulimit -s `ulimit -H -s`
-  eval $JAVA -Xmx128G -XX:-UseGCOverheadLimit org.kframework.main.Main '"$@"'
+  eval $JAVA -Xmx32G -XX:-UseGCOverheadLimit org.kframework.main.Main '"$@"'
 fi
