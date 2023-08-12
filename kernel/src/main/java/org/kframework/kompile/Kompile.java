@@ -126,7 +126,7 @@ public class Kompile {
 
         if (kompileOptions.experimental.emitJson) {
             try {
-                files.saveToKompiled("parsed.json",   new String(ToJson.apply(parsedDef),          "UTF-8"));
+                files.saveToKompiled(kompileOptions.experimental.emitJsonPrefix + "parsed.json",   new String(ToJson.apply(parsedDef),          "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 throw KEMException.criticalError("Unsupported encoding `UTF-8` when saving JSON definition.");
             }
@@ -143,7 +143,7 @@ public class Kompile {
 
             if (kompileOptions.experimental.emitJson) {
                 try {
-                    files.saveToKompiled("compiled.json", new String(ToJson.apply(kompiledDefinition), "UTF-8"));
+                    files.saveToKompiled(kompileOptions.experimental.emitJsonPrefix + "compiled.json", new String(ToJson.apply(kompiledDefinition), "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     throw KEMException.criticalError("Unsupported encoding `UTF-8` when saving JSON definition.");
                 }

@@ -131,6 +131,8 @@ public class KompileOptions implements Serializable {
         @Parameter(names="--emit-json", description="Emit JSON serialized version of parsed and kompiled definitions.")
         public boolean emitJson = false;
 
+        @Parameter(names="--emit-json-prefix", description = "Prefix to filenames of emitted json")
+        public String emitJsonPrefix = "";
         @Parameter(names="--parse-only", description="Parse only.")
         public boolean parseOnly = false;
     }
